@@ -13,7 +13,16 @@
 <body>
     <p>Welcome to the chat app</p>
 
-    <script src="" async defer></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // method available to us from socket.io library
+        let socket = io(); // Initiating a request to server to open a web socket and keep that open
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        socket.on('disconnect', () => console.log('Disconnected from server'));
+    </script>
 </body>
 
 </html>
