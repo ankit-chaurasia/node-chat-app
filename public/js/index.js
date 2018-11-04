@@ -8,15 +8,22 @@ socket.on('disconnect', () => console.log('Disconnected from server'));
 
 socket.on('newMessage', (newMessage) => {
   console.log('New message', newMessage);
+  const { from, text } = newMessage;
+  let li = $('<li></li>');
+  li.text(`${from}: ${text}`);
+  $('#messages').append(li);
 });
 
-socket.emit(
-  'createMessage',
-  {
-    from: 'user@createMessage',
-    text: 'createMessage text'
-  },
-  (data) => {
-    console.log('Got it', data);
-  }
-);
+$('#message-form').on('submit', (e) => {
+  e.preventDefault();
+  socket.emit(
+    'createMessage',
+    {
+      from: 'user',
+      text: $('[name=message]').val()
+    },
+    (data) => {
+      console.log('Got it', data);
+    }
+  );
+});
